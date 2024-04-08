@@ -1,0 +1,19 @@
+<h2>Buen Dia</h2>
+
+<div>
+    <h2>Bienvenido al chat</h2>
+    <form id="usernameForm">
+        <input type="text" id="usernameInput" placeholder="Ingresa tu nombre de usuario">
+        <button type="submit">Ingresar</button>
+    </form>
+    <div id="chatSection" style="display: none;">
+        <input id="chatbox">
+        {{#each msg as |obj|}}
+            {{obj.user}} dice ({{obj.time}}): {{obj.message}}<br/>
+        {{/each}}
+        <p id="log"></p>
+    </div>
+</div>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="/js/chat.js"></script>
