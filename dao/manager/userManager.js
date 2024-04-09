@@ -36,7 +36,7 @@ const userManager = {
 
             req.session.isAuthenticated = true;
 
-            res.redirect("/home");
+            res.redirect("/chat");
 
         } catch (error) {
             console.error("Error al iniciar sesión:", error);
