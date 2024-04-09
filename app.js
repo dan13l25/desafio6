@@ -31,10 +31,11 @@ app.use(session({
 
 app.use("/api/products", productRouter)
 app.use("/api/carts", cartRouter)
-app.use("api/users", userRouter)
+app.use("/api/users", userRouter)
+
 
 app.get("/", (req,res) =>{
-    res.render("home")
+    res.render("login")
 })
 
 app.get("/chat", (req, res) => {
@@ -44,8 +45,8 @@ app.get("/chat", (req, res) => {
 app.get("/product", (req, res) => {
     res.render("product");
 });
-app.get("/users", (req, res) => {
-    res.render("login");
+app.get("/home", (req, res) => {
+    res.render("home");
 });
 
 

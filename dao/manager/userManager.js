@@ -36,7 +36,7 @@ const userManager = {
 
             req.session.isAuthenticated = true;
 
-            return res.redirect("/api/products");
+            res.redirect("/home");
 
         } catch (error) {
             console.error("Error al iniciar sesión:", error);
@@ -49,7 +49,7 @@ const userManager = {
     },
 
     register: async (req, res, next) => {
-        const { first_name, last_name, email, age, password } = req.body;
+        const { first_name, last_name, email, age, password, username } = req.body;
 
         try {
             const existingUser = await userModel.findOne({ email });
@@ -67,6 +67,7 @@ const userManager = {
                 last_name: last_name,
                 email: email,
                 age: age,
+                username: username,
                 password: hashedPassword,
                 role,
             });
