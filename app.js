@@ -7,6 +7,8 @@ import { productRouter } from "./routes/productRouter.js"
 import { cartRouter } from "./routes/cartRouter.js"
 import messagesModel from "./dao/models/message.js"
 import cookieParser from "cookie-parser"
+import session from "express-session"
+import userRouter from "./routes/userRouter.js";
 
 const app = express()
 const port = process.env.port || 8080
@@ -20,8 +22,16 @@ app.set('views',__dirname+'/views')
 app.use(express.static(__dirname+'/public'))
 app.use(cookieParser())
 
+app.use(session({
+    secret: "secret",
+    resave: false,
+    saveUninitialized: false
+}))
+
+
 app.use("/api/products", productRouter)
-app.use("/api/carts", cartRouter); 
+app.use("/api/carts", cartRouter)
+app.use("api/users", userRouter)
 
 app.get("/", (req,res) =>{
     res.render("home")
@@ -34,17 +44,24 @@ app.get("/chat", (req, res) => {
 app.get("/product", (req, res) => {
     res.render("product");
 });
+app.get("/users", (req, res) => {
+    res.render("login");
+});
+
 
 const connectMongoDB = async () => {
     const DB_URL = "mongodb+srv://dan13l:dani06011998@cluster0.pm7efvk.mongodb.net/ecommerce";
-    try{
-        await mongoose.connect(DB_URL)
-        console.log("mongodb conectado")
-    }catch(error){
-        console.error("No se conecto a mongo", error)
-        process.exit()
-    }
-    }
+
+mongoose.connect(DB_URL, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+}).then(() => {
+    console.log("MongoDB conectado")
+}).catch(error => {
+    console.error("Error al conectar a MongoDB:", error)
+    process.exit(1)
+})
+}
     
 connectMongoDB()
 
